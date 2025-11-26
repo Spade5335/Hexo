@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Games - Zero Lag Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gradient-purple: linear-gradient(180deg, #a78bfa 0%, #e0b3ff 50%, #ffffff 100%);
+            --bg-black: #000000;
+            --bg-dark-gray: #0a0a0a;
+            --bg-card: #151515;
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+            --border-gray: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-black);
+            color: var(--text-white);
+            font-weight: 600;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-white);
+            font-weight: 600;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+
+
+        /* Games Section */
+        .games-section {
+            margin-top: 80px;
+            padding: 6rem 2rem;
+            min-height: 100vh;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .section-subtitle {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .game-card {
+            cursor: pointer;
+            position: relative;
+            width: 240px;
+        }
+
+        .game-card-wrapper {
+            background: var(--bg-black);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-gray);
+            position: relative;
+            height: 240px;
+            width: 240px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .game-card-content {
+            position: relative;
+            z-index: 2;
+            margin-top: auto;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 60%, transparent 100%);
+            padding: 0.75rem;
+        }
+
+        .game-card-stats-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .game-card-stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .game-card-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .game-card-stat-value {
+            font-size: 0.85rem;
+            color: var(--text-white);
+            font-weight: 700;
+        }
+
+        .game-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-white);
+            text-align: center;
+            margin-top: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .game-card-stats {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .game-card-stat {
+            font-size: 0.8rem;
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .game-card-stat strong {
+            color: var(--text-white);
+            font-weight: 700;
+        }
+
+        /* More Games Card */
+        .more-games-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            border: 2px dashed var(--border-gray);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 240px;
+            width: 240px;
+            cursor: default;
+            transition: border-color 0.3s;
+        }
+
+        .more-games-card:hover {
+            border-color: rgba(167, 139, 250, 0.5);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .more-games-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--text-white);
+            margin-bottom: 1rem;
+        }
+
+        .more-games-text {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            background: var(--bg-black);
+            border-top: 1px solid var(--border-gray);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            width: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: var(--text-gray);
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="zero_lag_logo.png" alt="Zero Lag Games" class="logo-img">
+                <span class="logo-text">Zero Lag Games</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="zerolag_index.html">Home</a></li>
+                <li><a href="zerolag_games.html">Our Games</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="zerolag_contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Games Section -->
+    <section class="games-section">
+        <div class="section-header">
+            <h1 class="section-title">Our Games</h1>
+            <p class="section-subtitle">Explore our portfolio of exciting Roblox experiences</p>
+        </div>
+
+        <div class="games-grid" id="gamesGrid">
+            <!-- Games will be loaded here dynamically -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <img src="zero_lag_logo.png" alt="Zero Lag Games" class="footer-logo">
+            <p class="footer-text">© 2024 Zero Lag Games. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- External Games Configuration -->
+    <script src="games-config.js"></script>
+
+    <script>
+        // Load games
+        async function loadGames() {
+            const gamesGrid = document.getElementById('gamesGrid');
+            const maxDisplayGames = 8;
+            const totalGames = games.length;
+            const gamesToShow = Math.min(maxDisplayGames, totalGames);
+
+            for (let i = 0; i < gamesToShow; i++) {
+                const game = games[i];
+                const gameData = await fetchGameData(game.universeId);
+                const iconUrl = await fetchGameIcon(game.universeId);
+
+                if (!gameData) continue;
+
+                const gameCard = document.createElement('div');
+                gameCard.className = 'game-card';
+                gameCard.innerHTML = `
+                    <div class="game-card-wrapper">
+                        <img src="${iconUrl}" alt="${gameData.name}" class="game-card-image">
+                        <div class="game-card-content">
+                            <div class="game-card-stats-bottom">
+                                <div class="game-card-stat-row">
+                                    <span class="game-card-stat-label">Visits</span>
+                                    <span class="game-card-stat-value">${formatNumber(gameData.visits)}</span>
+                                </div>
+                                <div class="game-card-stat-row">
+                                    <span class="game-card-stat-label">Playing</span>
+                                    <span class="game-card-stat-value">${formatNumber(gameData.playing)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="game-card-title">${gameData.name}</h3>
+                `;
+                gameCard.onclick = () => window.open(`https://www.roblox.com/games/${game.placeId}`, '_blank');
+                gamesGrid.appendChild(gameCard);
+            }
+
+            // Add "more games" card if there are more than 8 games
+            if (totalGames > maxDisplayGames) {
+                const moreGamesCount = totalGames - maxDisplayGames;
+                const moreGamesCard = document.createElement('div');
+                moreGamesCard.className = 'game-card more-games-card';
+                moreGamesCard.innerHTML = `
+                    <div class="more-games-number">+${moreGamesCount}</div>
+                    <div class="more-games-text">More Games</div>
+                `;
+                gamesGrid.appendChild(moreGamesCard);
+            }
+        }
+
+        // Initialize
+        loadGames();
+    </script>
+</body>
+</html>
