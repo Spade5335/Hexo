@@ -82,6 +82,72 @@
             position: relative;
         }
 
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-white);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-bottom: 1px solid var(--border-gray);
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-menu a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
         /* Hero Section */
         .hero {
             margin-top: 80px;
@@ -619,6 +685,10 @@
                 display: none;
             }
 
+            .mobile-menu-btn {
+                display: flex;
+            }
+
             .logo-text {
                 font-size: 1.2rem;
             }
@@ -649,9 +719,11 @@
                 font-size: 1rem;
             }
 
-            /* Stats Section */
+            /* Stats Section - FIXED */
             .stats-section {
                 padding: 3rem 1rem;
+                min-height: auto !important;
+                height: auto !important;
             }
 
             .stats-header {
@@ -659,27 +731,29 @@
             }
 
             .stats-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                letter-spacing: 1px;
             }
 
             .stats-container {
                 flex-direction: column;
                 padding: 0 1rem;
+                gap: 1.5rem;
             }
 
             .stat-card {
                 width: 100%;
                 max-width: 280px;
-                height: 200px;
+                height: 180px;
+                margin: 0 auto;
             }
 
             .stat-card::before {
-                inset: -40px;
-                filter: blur(30px);
+                display: none;
             }
 
             .stat-card-number {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
             .stat-card-label {
@@ -725,8 +799,7 @@
             }
 
             .carousel-game-center::before {
-                inset: -40px;
-                filter: blur(30px);
+                display: none;
             }
 
             .explore-all-btn {
@@ -783,7 +856,6 @@
         @media (max-width: 480px) {
             .stats-title {
                 font-size: 1.5rem;
-                letter-spacing: 1px;
             }
 
             .section-title {
@@ -791,11 +863,11 @@
             }
 
             .stat-card {
-                height: 180px;
+                height: 160px;
             }
 
             .stat-card-number {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
         }
     </style>
@@ -815,8 +887,24 @@
                 <li><a href="#about">About Us</a></li>
                 <li><a href="zerolag_contact.html">Contact Us</a></li>
             </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#" id="homeLinkMobile">Home</a></li>
+            <li><a href="#top-games">Top Games</a></li>
+            <li><a href="zerolag_games.html">Our Games</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="zerolag_contact.html">Contact Us</a></li>
+        </ul>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -1062,24 +1150,61 @@
         window.addEventListener('resize', matchStatsHeight);
 
         // Smart Home navigation
-        document.getElementById('homeLink').addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Check if we're already on the home page
-            const currentPage = window.location.pathname;
-            const isOnHomePage = currentPage.endsWith('zerolag_index.html') || currentPage === '/' || currentPage.endsWith('/');
-            
-            if (isOnHomePage) {
-                // Scroll to stats section
-                const statsSection = document.querySelector('.stats-section');
-                if (statsSection) {
-                    statsSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            } else {
-                // Navigate to home page
-                window.location.href = 'zerolag_index.html';
+        function setupHomeNavigation(linkId) {
+            const homeLink = document.getElementById(linkId);
+            if (homeLink) {
+                homeLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    const menuBtn = document.getElementById('mobileMenuBtn');
+                    if (mobileMenu && menuBtn) {
+                        mobileMenu.classList.remove('active');
+                        menuBtn.classList.remove('active');
+                    }
+                    
+                    // Check if we're already on the home page
+                    const currentPage = window.location.pathname;
+                    const isOnHomePage = currentPage.endsWith('index.html') || currentPage.endsWith('index.html') || currentPage === '/' || currentPage.endsWith('/');
+                    
+                    if (isOnHomePage) {
+                        // Scroll to stats section
+                        const statsSection = document.querySelector('.stats-section');
+                        if (statsSection) {
+                            statsSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    } else {
+                        // Navigate to home page
+                        window.location.href = 'index.html';
+                    }
+                });
             }
-        });
+        }
+
+        // Setup for both desktop and mobile home links
+        setupHomeNavigation('homeLink');
+        setupHomeNavigation('homeLinkMobile');
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+
+            // Close menu when clicking a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenuBtn.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                });
+            });
+        }
 
         // Initialize
         loadContent();
