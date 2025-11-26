@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Lag Games | Roblox Game Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gradient-purple: linear-gradient(180deg, #a78bfa 0%, #e0b3ff 50%, #ffffff 100%);
+            --bg-black: #000000;
+            --bg-dark-gray: #0a0a0a;
+            --bg-card: #151515;
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+            --border-gray: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-black);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            min-height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            background: var(--bg-black);
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .hero-logo {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 0;
+            filter: none;
+            display: block;
+        }
+
+        .hero-banner-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .hero-overlay-content {
+            position: absolute;
+            bottom: 1rem;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gradient-purple);
+            color: var(--bg-black);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-white);
+            border: 2px solid var(--text-white);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem 2rem 4rem;
+        }
+
+        .hero-stat {
+            text-align: center;
+            background: var(--bg-card);
+            padding: 2rem 3rem;
+            border-radius: 15px;
+            border: 1px solid var(--border-gray);
+            flex: 1;
+        }
+
+        .hero-stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--gradient-purple);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-stat-label {
+            color: var(--text-white);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 0;
+            background: var(--bg-black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .stats-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stats-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-white);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .stats-container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 2.5rem 1.5rem;
+            border-radius: 30px;
+            text-align: center;
+            border: 1px solid var(--border-gray);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 240px;
+            height: 240px;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: -80px;
+            background: radial-gradient(ellipse at center, rgba(167, 139, 250, 0.4) 0%, rgba(167, 139, 250, 0.2) 40%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(60px);
+        }
+
+        .stat-card-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: var(--gradient-purple);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card-label {
+            color: var(--text-white);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Games Carousel Section */
+        .games-carousel-section {
+            padding: 6rem 2rem;
+            background: var(--bg-black);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .section-subtitle {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+        }
+
+        .carousel-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            padding: 3rem 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-game {
+            cursor: pointer;
+            position: relative;
+            min-width: 260px;
+            max-width: 260px;
+        }
+
+        .carousel-game-card {
+            height: 260px;
+            width: 260px;
+            background: var(--bg-black);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-gray);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Center game (1st place - highest visits) - same size but with glow */
+        .carousel-game-center::before {
+            content: '';
+            position: absolute;
+            inset: -60px;
+            background: radial-gradient(ellipse at center, rgba(167, 139, 250, 0.4) 0%, rgba(167, 139, 250, 0.2) 40%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(50px);
+        }
+
+        .carousel-game-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .carousel-game-content {
+            position: relative;
+            z-index: 2;
+            margin-top: auto;
+            background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0.3) 85%, transparent 100%);
+            padding: 0.75rem;
+        }
+
+        .carousel-game-stats-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .carousel-game-stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .carousel-game-stat-label {
+            font-size: 1.15rem;
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .carousel-game-stat-value {
+            font-size: 1.15rem;
+            color: var(--text-white);
+            font-weight: 700;
+        }
+
+        .carousel-game-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-white);
+            text-align: center;
+            margin-top: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .carousel-game-stats-top {
+            display: none;
+        }
+
+        .carousel-game-stat-item {
+            display: none;
+        }
+
+        .carousel-game-stats {
+            display: none;
+        }
+
+        .carousel-game-stat {
+            display: none;
+        }
+
+        .carousel-game-stat strong {
+            display: none;
+        }
+
+        .explore-all-btn {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 6rem 2rem;
+            background: var(--bg-dark-gray);
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Offers Section */
+        .offers-section {
+            padding: 6rem 2rem;
+            background: var(--bg-black);
+        }
+
+        .offers-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .offer-card {
+            background: var(--bg-card);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(167, 139, 250, 0.5);
+            text-align: center;
+        }
+
+        .offer-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .offer-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-purple);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .offer-description {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Contact Form Section */
+        .contact-form-section {
+            padding: 6rem 2rem;
+            background: var(--bg-dark-gray);
+        }
+
+        .contact-form-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-form-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-form-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .contact-form-header p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-gray);
+            border-radius: 10px;
+            color: var(--text-white);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: rgba(167, 139, 250, 0.5);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            margin: 1.5rem 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-top: 0.25rem;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--gradient-purple);
+            color: var(--bg-black);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            padding: 0;
+            background: var(--bg-black);
+            border-top: 1px solid var(--border-gray);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            width: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: var(--text-gray);
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .offers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                flex-direction: column;
+            }
+
+            .stat-card-side,
+            .stat-card-center {
+                width: 280px;
+                height: 280px;
+            }
+
+            .stat-card-center .stat-card-number {
+                font-size: 4.5rem;
+            }
+
+            .stat-card-center .stat-card-label {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="zero_lag_logo.png" alt="Zero Lag Games" class="logo-img">
+                <span class="logo-text">Zero Lag Games</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" id="homeLink">Home</a></li>
+                <li><a href="#top-games">Top Games</a></li>
+                <li><a href="zerolag_games.html">Our Games</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="zerolag_contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-banner-wrapper">
+                <img src="zero_lag_banner.png" alt="Zero Lag Games" class="hero-logo">
+                <div class="hero-overlay-content">
+                    <div class="hero-buttons">
+                        <a href="zerolag_games.html" class="btn btn-primary">View Our Games →</a>
+                        <a href="zerolag_contact.html" class="btn btn-secondary">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-header">
+            <h2 class="stats-title">Our Achievements</h2>
+        </div>
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-card-number" id="playersOnline">0</div>
+                <div class="stat-card-label">Players Online</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-number" id="totalVisits">0</div>
+                <div class="stat-card-label">Total Visits</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-number" id="totalFavorites">0</div>
+                <div class="stat-card-label">Total Favorites</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Carousel Section -->
+    <section class="games-carousel-section" id="top-games">
+        <div class="section-header">
+            <h2 class="section-title">Our Top Games</h2>
+            <p class="section-subtitle">Experience the best of what we have to offer</p>
+        </div>
+
+        <div class="carousel-container" id="carouselContainer">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Games will be loaded here dynamically -->
+            </div>
+        </div>
+
+        <div class="explore-all-btn">
+            <a href="zerolag_games.html" class="btn btn-primary">Explore All Games →</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="section-header">
+            <h2 class="section-title">What is Zero Lag Games?</h2>
+        </div>
+        <div class="about-content">
+            <p>Zero Lag Games is a premier Roblox game development studio dedicated to creating and publishing high-quality gaming experiences. We specialize in acquiring promising games and transforming them into massively successful titles through our expertise in development, marketing, and monetization.</p>
+            <p>Our mission is to empower game creators by providing them with the resources, support, and expertise needed to reach millions of players worldwide while ensuring they receive fair compensation for their creative work.</p>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="offers-section">
+        <div class="section-header">
+            <h2 class="section-title">What We Offer</h2>
+            <p class="section-subtitle">Partner with us to unlock your game's full potential</p>
+        </div>
+
+        <div class="offers-grid">
+            <div class="offer-card">
+                <div class="offer-icon">💎</div>
+                <h3 class="offer-title">Full Acquisition</h3>
+                <p class="offer-description">We entirely buy your game for an undeniable offer, giving you the freedom to move on to your next project while we take it to new heights.</p>
+            </div>
+
+            <div class="offer-card">
+                <div class="offer-icon">🚀</div>
+                <h3 class="offer-title">Development & Marketing</h3>
+                <p class="offer-description">Your game's development, marketing, and future updates will be taken care of by our talented team while you just settle back and get your payout from the game.</p>
+            </div>
+
+            <div class="offer-card">
+                <div class="offer-icon">📈</div>
+                <h3 class="offer-title">Monetization Strategies</h3>
+                <p class="offer-description">We ensure you receive the max out of your game's monetization, for a percentage of the game's revenue.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <img src="zero_lag_logo.png" alt="Zero Lag Games" class="footer-logo">
+            <p class="footer-text">© 2024 Zero Lag Games. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- External Games Configuration -->
+    <script src="games-config.js"></script>
+
+    <script>
+        // Load all stats and games
+        async function loadContent() {
+            // Check if games array exists
+            if (typeof games === 'undefined' || !games || games.length === 0) {
+                console.error('Games configuration not loaded or empty!');
+                document.getElementById('playersOnline').textContent = '0';
+                document.getElementById('totalVisits').textContent = '0';
+                document.getElementById('totalFavorites').textContent = '0';
+                return;
+            }
+
+            let totalVisits = 0;
+            let totalPlayers = 0;
+            let totalFavorites = 0;
+
+            const carouselTrack = document.getElementById('carouselTrack');
+            const maxCarouselGames = 3;
+
+            if (!carouselTrack) {
+                console.error('Carousel track element not found!');
+                return;
+            }
+
+            console.log(`Starting to load ${games.length} games...`);
+
+            // Fetch all game data first
+            const gamesWithData = [];
+            for (let i = 0; i < games.length; i++) {
+                const game = games[i];
+                const gameData = await fetchGameData(game.universeId);
+                const iconUrl = await fetchGameIcon(game.universeId);
+
+                if (!gameData) {
+                    console.warn(`Failed to load game data for universe ${game.universeId}`);
+                    continue;
+                }
+
+                totalVisits += gameData.visits || 0;
+                totalPlayers += gameData.playing || 0;
+                totalFavorites += gameData.favoritedCount || 0;
+
+                gamesWithData.push({
+                    game,
+                    gameData,
+                    iconUrl,
+                    visits: gameData.visits || 0
+                });
+            }
+
+            console.log(`Loaded ${gamesWithData.length} games with total visits: ${totalVisits}`);
+
+            // If no games loaded, show error message
+            if (gamesWithData.length === 0) {
+                carouselTrack.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-gray); font-size: 1.2rem;">No games loaded. Make sure games-config.js is in the same directory.</div>';
+                document.getElementById('playersOnline').textContent = '0';
+                document.getElementById('totalVisits').textContent = '0';
+                document.getElementById('totalFavorites').textContent = '0';
+                return;
+            }
+
+            // Sort by visits descending
+            gamesWithData.sort((a, b) => b.visits - a.visits);
+
+            // Take top 3 and arrange: 2nd, 1st, 3rd
+            const topGames = gamesWithData.slice(0, maxCarouselGames);
+            const displayOrder = topGames.length === 3 
+                ? [topGames[1], topGames[0], topGames[2]] // 2nd, 1st, 3rd
+                : topGames.length === 2
+                ? [topGames[1], topGames[0]] // 2nd, 1st
+                : topGames; // Just show what we have
+
+            displayOrder.forEach((item, index) => {
+                const { game, gameData, iconUrl } = item;
+
+                // Clean game name
+                const cleanName = gameData.name
+                    .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
+                    .replace(/[\[\](){}⟨⟩]/g, '')
+                    .replace(/[^\w\s'-]/g, '')
+                    .trim();
+
+                // Add center class to the middle card (which is the highest visits)
+                const isCenterCard = topGames.length === 3 ? index === 1 : index === 0;
+                
+                const gameCard = document.createElement('div');
+                gameCard.className = isCenterCard ? 'carousel-game carousel-game-center' : 'carousel-game';
+                gameCard.innerHTML = `
+                    <div class="carousel-game-card">
+                        <img src="${iconUrl}" alt="${cleanName}" class="carousel-game-img">
+                        <div class="carousel-game-content">
+                            <div class="carousel-game-stats-bottom">
+                                <div class="carousel-game-stat-row">
+                                    <span class="carousel-game-stat-label">Visits</span>
+                                    <span class="carousel-game-stat-value">${formatNumber(gameData.visits)}</span>
+                                </div>
+                                <div class="carousel-game-stat-row">
+                                    <span class="carousel-game-stat-label">Playing</span>
+                                    <span class="carousel-game-stat-value">${formatNumber(gameData.playing)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="carousel-game-title">${cleanName}</h3>
+                `;
+                gameCard.onclick = () => window.open(`https://www.roblox.com/games/${game.placeId}`, '_blank');
+                carouselTrack.appendChild(gameCard);
+            });
+
+            // Update stats
+            document.getElementById('playersOnline').textContent = formatNumber(totalPlayers);
+            document.getElementById('totalVisits').textContent = formatNumber(totalVisits);
+            document.getElementById('totalFavorites').textContent = formatNumber(totalFavorites);
+
+            // Start carousel animation
+            startCarousel();
+        }
+
+        // Carousel animation
+        // Carousel animation - DISABLED
+        function startCarousel() {
+            // Carousel rotation disabled - all cards remain equal
+            // Cards only highlight on hover
+        }
+
+        // Match stats section height to banner height
+        function matchStatsHeight() {
+            const banner = document.querySelector('.hero-logo');
+            const statsSection = document.querySelector('.stats-section');
+            if (banner && statsSection) {
+                const bannerHeight = banner.offsetHeight;
+                statsSection.style.height = bannerHeight + 'px';
+            }
+        }
+
+        // Initialize
+        window.addEventListener('load', matchStatsHeight);
+        window.addEventListener('resize', matchStatsHeight);
+
+        // Smart Home navigation
+        document.getElementById('homeLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Check if we're already on the home page
+            const currentPage = window.location.pathname;
+            const isOnHomePage = currentPage.endsWith('zerolag_index.html') || currentPage === '/' || currentPage.endsWith('/');
+            
+            if (isOnHomePage) {
+                // Scroll to stats section
+                const statsSection = document.querySelector('.stats-section');
+                if (statsSection) {
+                    statsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            } else {
+                // Navigate to home page
+                window.location.href = 'zerolag_index.html';
+            }
+        });
+
+        // Initialize
+        loadContent();
+    </script>
+</body>
+</html>
