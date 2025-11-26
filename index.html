@@ -280,7 +280,7 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 6rem;
+            margin-bottom: 3rem;
         }
 
         .section-title {
@@ -610,38 +610,192 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            /* Navigation */
+            .nav-container {
+                padding: 0 1.5rem;
+            }
+
             .nav-links {
                 display: none;
             }
 
-            .hero h1 {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .logo-img {
+                width: 40px;
+                height: 40px;
+            }
+
+            /* Hero Section */
+            .hero {
+                padding: 0;
+            }
+
+            .hero-logo {
+                width: 100%;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            /* Stats Section */
+            .stats-section {
+                padding: 3rem 1rem;
+            }
+
+            .stats-header {
+                margin-bottom: 2rem;
+            }
+
+            .stats-title {
                 font-size: 2rem;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                padding: 0 1rem;
+            }
+
+            .stat-card {
+                width: 100%;
+                max-width: 280px;
+                height: 200px;
+            }
+
+            .stat-card::before {
+                inset: -40px;
+                filter: blur(30px);
+            }
+
+            .stat-card-number {
+                font-size: 3rem;
+            }
+
+            .stat-card-label {
+                font-size: 1rem;
+            }
+
+            /* Games Carousel Section */
+            .games-carousel-section {
+                padding: 4rem 1rem;
+            }
+
+            .section-header {
+                margin-bottom: 2rem;
             }
 
             .section-title {
                 font-size: 2rem;
             }
 
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .carousel-container {
+                padding: 2rem 0;
+            }
+
+            .carousel-track {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            .carousel-game,
+            .carousel-game-center {
+                min-width: 100%;
+                max-width: 280px;
+            }
+
+            .carousel-game-card {
+                width: 100% !important;
+                height: 280px !important;
+            }
+
+            .carousel-game-center::before {
+                inset: -40px;
+                filter: blur(30px);
+            }
+
+            .explore-all-btn {
+                margin-top: 2rem;
+                padding: 0 1rem;
+            }
+
+            /* About Section */
+            .about-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .about-content {
+                text-align: left;
+            }
+
+            .about-content p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            /* Offers Section */
+            .offers-section {
+                padding: 4rem 1.5rem;
+            }
+
             .offers-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
-            .stats-container {
-                flex-direction: column;
+            .offer-card {
+                padding: 2rem 1.5rem;
             }
 
-            .stat-card-side,
-            .stat-card-center {
-                width: 280px;
-                height: 280px;
+            .offer-icon {
+                font-size: 2.5rem;
             }
 
-            .stat-card-center .stat-card-number {
-                font-size: 4.5rem;
+            .offer-title {
+                font-size: 1.5rem;
             }
 
-            .stat-card-center .stat-card-label {
-                font-size: 1.4rem;
+            .offer-description {
+                font-size: 0.95rem;
+            }
+
+            /* Footer */
+            footer {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-title {
+                font-size: 1.5rem;
+                letter-spacing: 1px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .stat-card {
+                height: 180px;
+            }
+
+            .stat-card-number {
+                font-size: 2.5rem;
             }
         }
     </style>
