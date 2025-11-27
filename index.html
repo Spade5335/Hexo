@@ -258,49 +258,11 @@
             font-weight: 600;
         }
 
-        /* Stats Section */
-        .stats-section {
-            padding: 4rem 0;
-            background: var(--bg-black);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .stats-header {
-            text-align: center;
-            margin-bottom: 4rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .stats-title {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--text-white);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .stats-container {
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
+        /* Stat Cards (used in About section) */
         .stat-card {
             background: var(--bg-card);
-            padding: 2.5rem 1.5rem;
-            border-radius: 30px;
+            padding: 1.5rem 1rem;
+            border-radius: 20px;
             text-align: center;
             border: 1px solid var(--border-gray);
             display: flex;
@@ -308,33 +270,33 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            width: 240px;
-            height: 240px;
+            width: 180px;
+            height: 180px;
         }
 
         .stat-card::before {
             content: '';
             position: absolute;
-            inset: -80px;
+            inset: -60px;
             background: radial-gradient(ellipse at center, rgba(167, 139, 250, 0.4) 0%, rgba(167, 139, 250, 0.2) 40%, transparent 70%);
             z-index: -1;
             pointer-events: none;
-            filter: blur(60px);
+            filter: blur(50px);
         }
 
         .stat-card-number {
-            font-size: 4rem;
+            font-size: 2.5rem;
             font-weight: 800;
             background: var(--gradient-purple);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .stat-card-label {
             color: var(--text-white);
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             font-weight: 600;
         }
 
@@ -491,10 +453,32 @@
             background: var(--bg-dark-gray);
         }
 
-        .about-content {
-            max-width: 900px;
+        .about-combined-container {
+            max-width: 1400px;
             margin: 0 auto;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .about-text-side {
+            flex: 1;
+        }
+
+        .about-text-side .section-header {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .about-text-side .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .about-content {
+            text-align: left;
         }
 
         .about-content p {
@@ -502,6 +486,29 @@
             line-height: 2;
             color: var(--text-gray);
             margin-bottom: 1.5rem;
+        }
+
+        .about-stats-side {
+            flex: 0 0 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .stat-position-1 {
+            align-self: flex-start;
+            margin-left: 0;
+        }
+
+        .stat-position-2 {
+            align-self: center;
+            margin-left: 2rem;
+        }
+
+        .stat-position-3 {
+            align-self: flex-start;
+            margin-left: 0;
         }
 
         /* Offers Section */
@@ -719,46 +726,6 @@
                 font-size: 1rem;
             }
 
-            /* Stats Section - FIXED */
-            .stats-section {
-                padding: 3rem 1rem;
-                min-height: auto !important;
-                height: auto !important;
-            }
-
-            .stats-header {
-                margin-bottom: 2rem;
-            }
-
-            .stats-title {
-                font-size: 1.8rem;
-                letter-spacing: 1px;
-            }
-
-            .stats-container {
-                flex-direction: column;
-                padding: 0 1rem;
-                gap: 1.5rem;
-            }
-
-            .stat-card {
-                width: 100%;
-                max-width: 280px;
-                height: 180px;
-                margin: 0 auto;
-            }
-
-            .stat-card::before {
-                display: none;
-            }
-
-            .stat-card-number {
-                font-size: 2.5rem;
-            }
-
-            .stat-card-label {
-                font-size: 1rem;
-            }
 
             /* Games Carousel Section */
             .games-carousel-section {
@@ -807,18 +774,64 @@
                 padding: 0 1rem;
             }
 
-            /* About Section */
+            /* About Section with Stats */
             .about-section {
                 padding: 4rem 1.5rem;
             }
 
+            .about-combined-container {
+                flex-direction: column;
+                gap: 3rem;
+            }
+
+            .about-text-side .section-header {
+                text-align: center;
+            }
+
+            .about-text-side .section-title {
+                font-size: 2rem;
+            }
+
             .about-content {
-                text-align: left;
+                text-align: center;
             }
 
             .about-content p {
                 font-size: 1rem;
                 margin-bottom: 1.5rem;
+                line-height: 1.8;
+            }
+
+            .about-stats-side {
+                flex: none;
+                width: 100%;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            .stat-card {
+                width: 100%;
+                max-width: 280px;
+                height: 180px;
+            }
+
+            .stat-card::before {
+                display: none;
+            }
+
+            .stat-card-number {
+                font-size: 2.5rem;
+            }
+
+            .stat-card-label {
+                font-size: 1rem;
+            }
+
+            .stat-position-1,
+            .stat-position-2,
+            .stat-position-3 {
+                margin-left: 0;
+                align-self: center;
             }
 
             /* Offers Section */
@@ -921,26 +934,6 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="stats-header">
-            <h2 class="stats-title">Our Achievements</h2>
-        </div>
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-card-number" id="playersOnline">0</div>
-                <div class="stat-card-label">Players Online</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-number" id="totalVisits">0</div>
-                <div class="stat-card-label">Total Visits</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-number" id="totalFavorites">0</div>
-                <div class="stat-card-label">Total Favorites</div>
-            </div>
-        </div>
-    </section>
 
     <!-- Games Carousel Section -->
     <section class="games-carousel-section" id="top-games">
@@ -960,14 +953,32 @@
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- About Section with Stats -->
     <section class="about-section" id="about">
-        <div class="section-header">
-            <h2 class="section-title">What is Zero Lag Games?</h2>
-        </div>
-        <div class="about-content">
-            <p>Zero Lag Games is a premier Roblox game development studio dedicated to creating and publishing high-quality gaming experiences. We specialize in acquiring promising games and transforming them into massively successful titles through our expertise in development, marketing, and monetization.</p>
-            <p>Our mission is to empower game creators by providing them with the resources, support, and expertise needed to reach millions of players worldwide while ensuring they receive fair compensation for their creative work.</p>
+        <div class="about-combined-container">
+            <div class="about-text-side">
+                <div class="section-header">
+                    <h2 class="section-title">What is Zero Lag Games?</h2>
+                </div>
+                <div class="about-content">
+                    <p>Zero Lag Games is a premier Roblox game development studio dedicated to creating and publishing high-quality gaming experiences. We specialize in acquiring promising games and transforming them into massively successful titles through our expertise in development, marketing, and monetization.</p>
+                    <p>Our mission is to empower game creators by providing them with the resources, support, and expertise needed to reach millions of players worldwide while ensuring they receive fair compensation for their creative work.</p>
+                </div>
+            </div>
+            <div class="about-stats-side">
+                <div class="stat-card stat-position-1">
+                    <div class="stat-card-number" id="playersOnline">0</div>
+                    <div class="stat-card-label">Players Online</div>
+                </div>
+                <div class="stat-card stat-position-2">
+                    <div class="stat-card-number" id="totalVisits">0</div>
+                    <div class="stat-card-label">Total Visits</div>
+                </div>
+                <div class="stat-card stat-position-3">
+                    <div class="stat-card-number" id="totalFavorites">0</div>
+                    <div class="stat-card-label">Total Favorites</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1136,19 +1147,6 @@
         }
 
         // Match stats section height to banner height
-        function matchStatsHeight() {
-            const banner = document.querySelector('.hero-logo');
-            const statsSection = document.querySelector('.stats-section');
-            if (banner && statsSection) {
-                const bannerHeight = banner.offsetHeight;
-                statsSection.style.height = bannerHeight + 'px';
-            }
-        }
-
-        // Initialize
-        window.addEventListener('load', matchStatsHeight);
-        window.addEventListener('resize', matchStatsHeight);
-
         // Smart Home navigation
         function setupHomeNavigation(linkId) {
             const homeLink = document.getElementById(linkId);
@@ -1166,17 +1164,17 @@
                     
                     // Check if we're already on the home page
                     const currentPage = window.location.pathname;
-                    const isOnHomePage = currentPage.endsWith('index.html') || currentPage.endsWith('index.html') || currentPage === '/' || currentPage.endsWith('/');
+                    const isOnHomePage = currentPage.endsWith('zerolag_index.html') || currentPage.endsWith('index.html') || currentPage === '/' || currentPage.endsWith('/');
                     
                     if (isOnHomePage) {
-                        // Scroll to stats section
-                        const statsSection = document.querySelector('.stats-section');
-                        if (statsSection) {
-                            statsSection.scrollIntoView({ behavior: 'smooth' });
+                        // Scroll to about section (which now contains stats)
+                        const aboutSection = document.querySelector('.about-section');
+                        if (aboutSection) {
+                            aboutSection.scrollIntoView({ behavior: 'smooth' });
                         }
                     } else {
                         // Navigate to home page
-                        window.location.href = 'index.html';
+                        window.location.href = 'zerolag_index.html';
                     }
                 });
             }
