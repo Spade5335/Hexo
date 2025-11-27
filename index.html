@@ -497,18 +497,24 @@
         }
 
         .stat-position-1 {
-            align-self: flex-start;
-            margin-left: 0;
+            align-self: stretch;
+            width: 100%;
+            height: 140px;
         }
 
         .stat-position-2 {
-            align-self: center;
-            margin-left: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .stat-position-2 .stat-card {
+            width: 180px;
+            height: 180px;
         }
 
         .stat-position-3 {
-            align-self: flex-start;
-            margin-left: 0;
+            /* This will be hidden as we'll restructure HTML */
         }
 
         /* Offers Section */
@@ -812,7 +818,7 @@
             .stat-card {
                 width: 100%;
                 max-width: 280px;
-                height: 180px;
+                height: 160px;
             }
 
             .stat-card::before {
@@ -820,18 +826,28 @@
             }
 
             .stat-card-number {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
 
             .stat-card-label {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
 
-            .stat-position-1,
-            .stat-position-2,
-            .stat-position-3 {
-                margin-left: 0;
-                align-self: center;
+            .stat-position-1 {
+                width: 100%;
+                max-width: 280px;
+                height: 140px;
+            }
+
+            .stat-position-2 {
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+            }
+
+            .stat-position-2 .stat-card {
+                width: 100%;
+                max-width: 280px;
             }
 
             /* Offers Section */
@@ -867,20 +883,20 @@
         }
 
         @media (max-width: 480px) {
-            .stats-title {
-                font-size: 1.5rem;
-            }
-
             .section-title {
                 font-size: 1.8rem;
             }
 
             .stat-card {
-                height: 160px;
+                height: 140px;
             }
 
             .stat-card-number {
-                font-size: 2.2rem;
+                font-size: 2rem;
+            }
+
+            .stat-position-1 {
+                height: 120px;
             }
         }
     </style>
@@ -967,16 +983,18 @@
             </div>
             <div class="about-stats-side">
                 <div class="stat-card stat-position-1">
-                    <div class="stat-card-number" id="playersOnline">0</div>
-                    <div class="stat-card-label">Players Online</div>
-                </div>
-                <div class="stat-card stat-position-2">
                     <div class="stat-card-number" id="totalVisits">0</div>
                     <div class="stat-card-label">Total Visits</div>
                 </div>
-                <div class="stat-card stat-position-3">
-                    <div class="stat-card-number" id="totalFavorites">0</div>
-                    <div class="stat-card-label">Total Favorites</div>
+                <div class="stat-position-2">
+                    <div class="stat-card">
+                        <div class="stat-card-number" id="playersOnline">0</div>
+                        <div class="stat-card-label">Players Online</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-number" id="totalFavorites">0</div>
+                        <div class="stat-card-label">Total Favorites</div>
+                    </div>
                 </div>
             </div>
         </div>
