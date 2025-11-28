@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zero Lag Games | Roblox Game Studio</title>
-    <link rel="icon" type="image/png" href="zero_lag_logo.png">
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
@@ -81,8 +81,15 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 1.25rem;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
             position: relative;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-white);
         }
 
         /* Mobile Menu Button */
@@ -227,8 +234,8 @@
         }
 
         .btn-primary {
-            background: var(--gradient-purple);
-            color: var(--bg-black);
+            background: linear-gradient(180deg, #9891F8 0%, #CDA9E7 100%);
+            color: var(--text-white);
         }
 
         .btn-secondary {
@@ -792,12 +799,12 @@
 
         .footer-logo {
             width: 60px;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .footer-text {
             color: var(--text-gray);
-            margin-top: 2rem;
+            margin-top: 0;
         }
 
         /* Responsive */
@@ -1140,7 +1147,7 @@
             <div class="offer-card">
                 <h3 class="offer-title">Full Acquisition</h3>
                 <div class="offer-icon">
-                    <img src="acquisition.png" alt="Full Acquisition Icon">
+                    <img src="acquisition2.png" alt="Full Acquisition Icon">
                 </div>
                 <p class="offer-description">We entirely buy your game for an undeniable offer, giving you the freedom to move on to your next project while we take it to new heights.</p>
             </div>
