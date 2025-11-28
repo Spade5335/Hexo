@@ -36,11 +36,6 @@ const games = [
         placeId: '129455795245776',
         description: ''
     },
-     { // Unknown 2
-        universeId: '8681395451',
-        placeId: '77353193309833',
-        description: ''
-    },
     // Add more games below - just copy the format above
     // {
     //     universeId: 'YOUR_UNIVERSE_ID',
