@@ -33,6 +33,9 @@ const games = [
 // HELPER FUNCTIONS (Don't modify these)
 // ===================================================================
 
+// CORS Proxy URL - routes requests through a proxy to avoid CORS issues
+const CORS_PROXY = 'https://corsproxy.io/?';
+
 // Format numbers (e.g., 1000 -> 1K, 1000000 -> 1M)
 function formatNumber(num) {
     if (num >= 1000000000) return (num / 1000000000).toFixed(1) + 'B';
@@ -44,12 +47,7 @@ function formatNumber(num) {
 // Fetch game data from Roblox API
 async function fetchGameData(universeId) {
     try {
-        let response;
-        try {
-            response = await fetch(`https://games.roblox.com/v1/games?universeIds=${universeId}`);
-        } catch {
-            response = await fetch(`https://corsproxy.io/?https://games.roblox.com/v1/games?universeIds=${universeId}`);
-        }
+        const response = await fetch(`${CORS_PROXY}https://games.roblox.com/v1/games?universeIds=${universeId}`);
         const data = await response.json();
         return data.data[0];
     } catch (error) {
@@ -61,16 +59,11 @@ async function fetchGameData(universeId) {
 // Fetch game icon from Roblox API
 async function fetchGameIcon(universeId) {
     try {
-        let response;
-        try {
-            response = await fetch(`https://thumbnails.roblox.com/v1/games/icons?universeIds=${universeId}&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false`);
-        } catch {
-            response = await fetch(`https://corsproxy.io/?https://thumbnails.roblox.com/v1/games/icons?universeIds=${universeId}&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false`);
-        }
+        const response = await fetch(`${CORS_PROXY}https://thumbnails.roblox.com/v1/games/icons?universeIds=${universeId}&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false`);
         const data = await response.json();
-        return data.data[0]?.imageUrl;
+        return data.data[0]?.imageUrl || '';
     } catch (error) {
         console.error('Error fetching icon:', error);
-        return null;
+        return '';
     }
 }
