@@ -12,7 +12,7 @@
         }
 
         :root {
-            --gradient-purple: linear-gradient(180deg, #a78bfa 0%, #e0b3ff 50%, #ffffff 100%);
+            --gradient-purple: linear-gradient(180deg, #ede3f0 0%, #e1cee3 50%, #ffffff 100%);
             --bg-black: #000000;
             --bg-dark-gray: #0a0a0a;
             --bg-card: #151515;
@@ -31,18 +31,18 @@
 
         /* Navigation */
         nav {
-            position: fixed;
+            position: absolute;
             top: 0;
             width: 100%;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
-            padding: 1.5rem 0;
+            padding: 0.5rem 0;
             border-bottom: 1px solid var(--border-gray);
         }
 
         .nav-container {
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 0 3rem;
             display: flex;
@@ -57,12 +57,12 @@
         }
 
         .logo-img {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
         }
 
         .logo-text {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 800;
             letter-spacing: -0.5px;
         }
@@ -77,7 +77,7 @@
             color: var(--text-white);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             transition: color 0.3s;
             position: relative;
         }
@@ -118,7 +118,7 @@
         .mobile-menu {
             display: none;
             position: fixed;
-            top: 80px;
+            top: 60px;
             left: 0;
             right: 0;
             background: rgba(0, 0, 0, 0.98);
@@ -150,7 +150,7 @@
 
         /* Hero Section */
         .hero {
-            margin-top: 80px;
+            margin-top: 60px;
             min-height: auto;
             display: flex;
             align-items: center;
@@ -182,9 +182,19 @@
             width: 100%;
         }
 
+        .hero-banner-top-logo {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 1500px;
+            z-index: 2;
+        }
+
         .hero-overlay-content {
             position: absolute;
-            bottom: 1rem;
+            bottom: 2rem;
             left: 0;
             right: 0;
             display: flex;
@@ -261,43 +271,106 @@
         /* Stat Cards (used in About section) */
         .stat-card {
             background: var(--bg-card);
-            padding: 1.5rem 1rem;
+            padding: 1.2rem 0.8rem;
             border-radius: 20px;
-            text-align: center;
+            text-align: left;
             border: 1px solid var(--border-gray);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 0.3rem;
             position: relative;
-            width: 180px;
-            height: 180px;
         }
 
         .stat-card::before {
             content: '';
             position: absolute;
             inset: -60px;
-            background: radial-gradient(ellipse at center, rgba(167, 139, 250, 0.4) 0%, rgba(167, 139, 250, 0.2) 40%, transparent 70%);
+            background: radial-gradient(ellipse at center, rgba(237, 227, 240, 0.3) 0%, rgba(225, 206, 227, 0.15) 40%, transparent 70%);
             z-index: -1;
             pointer-events: none;
             filter: blur(50px);
         }
 
+        .stat-card-icon {
+            width: 144px;
+            height: 144px;
+            flex-shrink: 0;
+            object-fit: contain;
+        }
+
+        .stat-card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 0.15rem;
+        }
+
         .stat-card-number {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 800;
-            background: var(--gradient-purple);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
+            color: var(--text-white);
+            line-height: 1;
         }
 
         .stat-card-label {
             color: var(--text-white);
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+
+        /* Hide labels for position-2 cards (Players Online and Total Favorites) */
+        .stat-position-2 .stat-card-label {
+            display: none;
+        }
+
+        /* Adjust vertical alignment for position-2 cards since labels are hidden */
+        .stat-position-2 .stat-card {
+            justify-content: center;
+        }
+
+        .stat-position-2 .stat-card-content {
+            transform: translateY(-10px);
+        }
+
+        /* Make Total Visits (position-1) horizontal layout with bigger icon */
+        .stat-position-1 {
+            flex-direction: row !important;
+        }
+
+        .stat-position-1 .stat-card {
+            flex-direction: row !important;
+            justify-content: center !important;
+            align-items: center !important;
+            padding: 1.5rem 1rem !important;
+            gap: 0.8rem !important;
+        }
+
+        .stat-position-1 .stat-card-icon {
+            width: 168px;
+            height: 168px;
+        }
+
+        .stat-position-1 .stat-card-content {
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .stat-position-1 .stat-card-number {
+            font-size: 4rem;
+            text-align: center;
+            color: var(--text-white);
+        }
+
+        .stat-position-1 .stat-card-label {
+            font-size: 1.2rem;
+            text-align: center;
+            color: var(--text-white);
         }
 
         /* Games Carousel Section */
@@ -314,7 +387,7 @@
         .section-title {
             font-size: 3rem;
             font-weight: 800;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             color: var(--text-white);
         }
 
@@ -450,7 +523,7 @@
         /* About Section */
         .about-section {
             padding: 6rem 2rem;
-            background: var(--bg-dark-gray);
+            background: var(--bg-black);
         }
 
         .about-combined-container {
@@ -458,15 +531,17 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 4rem;
         }
 
         .about-text-side {
-            flex: 1;
+            flex: 0 1 500px;
+            max-width: 500px;
         }
 
         .about-text-side .section-header {
-            text-align: left;
+            text-align: center;
             margin-bottom: 2rem;
         }
 
@@ -478,18 +553,18 @@
         }
 
         .about-content {
-            text-align: left;
+            text-align: center;
         }
 
         .about-content p {
             font-size: 1.2rem;
             line-height: 2;
-            color: var(--text-gray);
+            color: var(--text-white);
             margin-bottom: 1.5rem;
         }
 
         .about-stats-side {
-            flex: 0 0 320px;
+            flex: 0 0 400px;
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
@@ -499,7 +574,7 @@
         .stat-position-1 {
             align-self: stretch;
             width: 100%;
-            height: 140px;
+            height: 190px;
         }
 
         .stat-position-2 {
@@ -509,8 +584,8 @@
         }
 
         .stat-position-2 .stat-card {
-            width: 180px;
-            height: 180px;
+            width: 210px;
+            height: 190px;
         }
 
         .stat-position-3 {
@@ -527,38 +602,59 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 4rem;
         }
 
         .offer-card {
             background: var(--bg-card);
-            padding: 3rem 2rem;
+            padding: 1.5rem 2rem 2.5rem 2rem;
             border-radius: 20px;
-            border: 1px solid rgba(167, 139, 250, 0.5);
+            border: 1px solid var(--border-gray);
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0;
+            min-height: 500px;
+            max-height: 500px;
         }
 
         .offer-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .offer-icon img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
         }
 
         .offer-title {
-            font-size: 1.8rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            background: var(--gradient-purple);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+            color: var(--text-white);
+            order: -1;
+            flex-shrink: 0;
         }
 
         .offer-description {
             color: var(--text-gray);
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 0.5rem;
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-start;
         }
 
         /* Contact Form Section */
@@ -718,6 +814,15 @@
 
             .hero-logo {
                 width: 100%;
+            }
+
+            .hero-banner-top-logo {
+                width: 90%;
+                max-width: 500px;
+            }
+
+            .hero-overlay-content {
+                bottom: 1rem;
             }
 
             .hero-buttons {
@@ -911,7 +1016,6 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#" id="homeLink">Home</a></li>
-                <li><a href="#top-games">Top Games</a></li>
                 <li><a href="zerolag_games.html">Our Games</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="zerolag_contact.html">Contact Us</a></li>
@@ -939,7 +1043,8 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-banner-wrapper">
-                <img src="zero_lag_banner.png" alt="Zero Lag Games" class="hero-logo">
+                <img src="zero_lag_banner_2.png" alt="Zero Lag Games" class="hero-logo">
+                <img src="zero_lag_banner_top_logo.png" alt="Zero Lag Games Logo" class="hero-banner-top-logo">
                 <div class="hero-overlay-content">
                     <div class="hero-buttons">
                         <a href="zerolag_games.html" class="btn btn-primary">View Our Games →</a>
@@ -974,26 +1079,34 @@
         <div class="about-combined-container">
             <div class="about-text-side">
                 <div class="section-header">
-                    <h2 class="section-title">What is Zero Lag Games?</h2>
+                    <h2 class="section-title">About Us</h2>
                 </div>
                 <div class="about-content">
-                    <p>Zero Lag Games is a premier Roblox game development studio dedicated to creating and publishing high-quality gaming experiences. We specialize in acquiring promising games and transforming them into massively successful titles through our expertise in development, marketing, and monetization.</p>
-                    <p>Our mission is to empower game creators by providing them with the resources, support, and expertise needed to reach millions of players worldwide while ensuring they receive fair compensation for their creative work.</p>
+                    <p>We have built a portfolio of titles played millions of times, reaching hundreds of millions of active users each month. We've contributed  many successful Roblox games, gaining deep knowledge of what makes games thrive. Our focus is on refining gameplay, improving performance, and expanding player reach while supporting creators with the tools and guidance they need to grow. We are committed to helping developers scale their ideas into global hits while ensuring they receive fair recognition and rewards for their work.</p>
                 </div>
             </div>
             <div class="about-stats-side">
                 <div class="stat-card stat-position-1">
-                    <div class="stat-card-number" id="totalVisits">0</div>
-                    <div class="stat-card-label">Total Visits</div>
+                    <img src="visits_icon.png" alt="Visits" class="stat-card-icon">
+                    <div class="stat-card-content">
+                        <div class="stat-card-number" id="totalVisits">0</div>
+                        <div class="stat-card-label">Total Visits</div>
+                    </div>
                 </div>
                 <div class="stat-position-2">
                     <div class="stat-card">
-                        <div class="stat-card-number" id="playersOnline">0</div>
-                        <div class="stat-card-label">Players Online</div>
+                        <img src="active_players.png" alt="Players" class="stat-card-icon">
+                        <div class="stat-card-content">
+                            <div class="stat-card-number" id="playersOnline">0</div>
+                            <div class="stat-card-label">Players Online</div>
+                        </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-card-number" id="totalFavorites">0</div>
-                        <div class="stat-card-label">Total Favorites</div>
+                        <img src="favourites_icon.png" alt="Favorites" class="stat-card-icon">
+                        <div class="stat-card-content">
+                            <div class="stat-card-number" id="totalFavorites">0</div>
+                            <div class="stat-card-label">Total Favorites</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1009,20 +1122,26 @@
 
         <div class="offers-grid">
             <div class="offer-card">
-                <div class="offer-icon">💎</div>
                 <h3 class="offer-title">Full Acquisition</h3>
+                <div class="offer-icon">
+                    <img src="acquisition.png" alt="Full Acquisition Icon">
+                </div>
                 <p class="offer-description">We entirely buy your game for an undeniable offer, giving you the freedom to move on to your next project while we take it to new heights.</p>
             </div>
 
             <div class="offer-card">
-                <div class="offer-icon">🚀</div>
                 <h3 class="offer-title">Development & Marketing</h3>
+                <div class="offer-icon">
+                    <img src="development.png" alt="Development & Marketing Icon">
+                </div>
                 <p class="offer-description">Your game's development, marketing, and future updates will be taken care of by our talented team while you just settle back and get your payout from the game.</p>
             </div>
 
             <div class="offer-card">
-                <div class="offer-icon">📈</div>
                 <h3 class="offer-title">Monetization Strategies</h3>
+                <div class="offer-icon">
+                    <img src="monetization.png" alt="Monetization Strategies Icon">
+                </div>
                 <p class="offer-description">We ensure you receive the max out of your game's monetization, for a percentage of the game's revenue.</p>
             </div>
         </div>
