@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zero Lag Games | Roblox Game Studio</title>
+    <link rel="icon" type="image/png" href="zero_lag_logo.png">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -217,7 +220,10 @@
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .btn-primary {
@@ -417,6 +423,7 @@
             position: relative;
             min-width: 260px;
             max-width: 260px;
+            transition: transform 0.3s ease;
         }
 
         .carousel-game-card {
@@ -431,7 +438,17 @@
             flex-direction: column;
         }
 
-        /* Center game (1st place - highest visits) - same size but with glow */
+        /* Center game (1st place - highest visits) - 20% bigger with glow */
+        .carousel-game-center {
+            min-width: 312px;
+            max-width: 312px;
+        }
+
+        .carousel-game-center .carousel-game-card {
+            height: 312px;
+            width: 312px;
+        }
+
         .carousel-game-center::before {
             content: '';
             position: absolute;
@@ -1016,7 +1033,6 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#" id="homeLink">Home</a></li>
-                <li><a href="#top-games">Top Games</a></li>
                 <li><a href="zerolag_games.html">Our Games</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="zerolag_contact.html">Contact Us</a></li>
@@ -1033,7 +1049,6 @@
     <div class="mobile-menu" id="mobileMenu">
         <ul>
             <li><a href="#" id="homeLinkMobile">Home</a></li>
-            <li><a href="#top-games">Top Games</a></li>
             <li><a href="zerolag_games.html">Our Games</a></li>
             <li><a href="#about">About Us</a></li>
             <li><a href="zerolag_contact.html">Contact Us</a></li>
@@ -1185,29 +1200,39 @@
 
             console.log(`Starting to load ${games.length} games...`);
 
-            // Fetch all game data first
-            const gamesWithData = [];
-            for (let i = 0; i < games.length; i++) {
-                const game = games[i];
-                const gameData = await fetchGameData(game.universeId);
-                const iconUrl = await fetchGameIcon(game.universeId);
+            // Fetch all game data in parallel for faster loading
+            const gamePromises = games.map(async (game) => {
+                try {
+                    const gameData = await fetchGameData(game.universeId);
+                    const iconUrl = await fetchGameIcon(game.universeId);
 
-                if (!gameData) {
-                    console.warn(`Failed to load game data for universe ${game.universeId}`);
-                    continue;
+                    if (!gameData) {
+                        console.warn(`Failed to load game data for universe ${game.universeId}`);
+                        return null;
+                    }
+
+                    return {
+                        game,
+                        gameData,
+                        iconUrl,
+                        visits: gameData.visits || 0
+                    };
+                } catch (error) {
+                    console.error(`Error loading game ${game.universeId}:`, error);
+                    return null;
                 }
+            });
 
-                totalVisits += gameData.visits || 0;
-                totalPlayers += gameData.playing || 0;
-                totalFavorites += gameData.favoritedCount || 0;
+            // Wait for all games to load in parallel
+            const gamesWithDataResults = await Promise.all(gamePromises);
+            const gamesWithData = gamesWithDataResults.filter(g => g !== null);
 
-                gamesWithData.push({
-                    game,
-                    gameData,
-                    iconUrl,
-                    visits: gameData.visits || 0
-                });
-            }
+            // Calculate totals
+            gamesWithData.forEach(item => {
+                totalVisits += item.gameData.visits || 0;
+                totalPlayers += item.gameData.playing || 0;
+                totalFavorites += item.gameData.favoritedCount || 0;
+            });
 
             console.log(`Loaded ${gamesWithData.length} games with total visits: ${totalVisits}`);
 
