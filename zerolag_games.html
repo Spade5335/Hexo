@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Games - Zero Lag Games</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -12,7 +15,7 @@
         }
 
         :root {
-            --gradient-purple: linear-gradient(180deg, #a78bfa 0%, #e0b3ff 50%, #ffffff 100%);
+            --gradient-purple: linear-gradient(180deg, #9891F8 0%, #CDA9E7 100%);
             --bg-black: #000000;
             --bg-dark-gray: #0a0a0a;
             --bg-card: #151515;
@@ -32,18 +35,18 @@
 
         /* Navigation */
         nav {
-            position: fixed;
+            position: absolute;
             top: 0;
             width: 100%;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
-            padding: 1.5rem 0;
+            padding: 0.5rem 0;
             border-bottom: 1px solid var(--border-gray);
         }
 
         .nav-container {
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 0 3rem;
             display: flex;
@@ -58,12 +61,12 @@
         }
 
         .logo-img {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
         }
 
         .logo-text {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 800;
             letter-spacing: -0.5px;
         }
@@ -78,10 +81,16 @@
             color: var(--text-white);
             font-weight: 600;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: color 0.3s;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
             position: relative;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-white);
         }
 
         /* Mobile Menu Button */
@@ -120,7 +129,7 @@
         .mobile-menu {
             display: none;
             position: fixed;
-            top: 80px;
+            top: 60px;
             left: 0;
             right: 0;
             background: rgba(0, 0, 0, 0.98);
@@ -150,11 +159,9 @@
             padding: 0.5rem 0;
         }
 
-
-
         /* Games Section */
         .games-section {
-            margin-top: 80px;
+            margin-top: 60px;
             padding: 6rem 2rem;
             min-height: 100vh;
         }
@@ -257,22 +264,6 @@
             white-space: nowrap;
         }
 
-        .game-card-stats {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .game-card-stat {
-            font-size: 0.8rem;
-            color: var(--text-white);
-            font-weight: 600;
-        }
-
-        .game-card-stat strong {
-            color: var(--text-white);
-            font-weight: 700;
-        }
-
         /* More Games Card */
         .more-games-card {
             background: var(--bg-card);
@@ -322,12 +313,12 @@
 
         .footer-logo {
             width: 60px;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .footer-text {
             color: var(--text-gray);
-            margin-top: 2rem;
+            margin-top: 0;
         }
 
         /* Responsive */
@@ -439,9 +430,9 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="zerolag_index.html">Home</a></li>
             <li><a href="zerolag_games.html">Our Games</a></li>
-            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="zerolag_index.html#about">About Us</a></li>
             <li><a href="zerolag_contact.html">Contact Us</a></li>
         </ul>
     </div>
@@ -470,20 +461,32 @@
     <script src="games-config.js"></script>
 
     <script>
-        // Load games
+        // Load games in parallel for faster loading
         async function loadGames() {
             const gamesGrid = document.getElementById('gamesGrid');
             const maxDisplayGames = 8;
             const totalGames = games.length;
             const gamesToShow = Math.min(maxDisplayGames, totalGames);
 
-            for (let i = 0; i < gamesToShow; i++) {
-                const game = games[i];
-                const gameData = await fetchGameData(game.universeId);
-                const iconUrl = await fetchGameIcon(game.universeId);
+            // Fetch all games in parallel
+            const gamePromises = games.slice(0, gamesToShow).map(async (game) => {
+                try {
+                    const gameData = await fetchGameData(game.universeId);
+                    const iconUrl = await fetchGameIcon(game.universeId);
+                    
+                    if (!gameData) return null;
+                    
+                    return { game, gameData, iconUrl };
+                } catch (error) {
+                    console.error(`Error loading game ${game.universeId}:`, error);
+                    return null;
+                }
+            });
 
-                if (!gameData) continue;
+            const gamesWithData = (await Promise.all(gamePromises)).filter(g => g !== null);
 
+            // Render game cards
+            gamesWithData.forEach(({ game, gameData, iconUrl }) => {
                 const gameCard = document.createElement('div');
                 gameCard.className = 'game-card';
                 gameCard.innerHTML = `
@@ -506,7 +509,7 @@
                 `;
                 gameCard.onclick = () => window.open(`https://www.roblox.com/games/${game.placeId}`, '_blank');
                 gamesGrid.appendChild(gameCard);
-            }
+            });
 
             // Add "more games" card if there are more than 8 games
             if (totalGames > maxDisplayGames) {
