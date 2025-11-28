@@ -6,20 +6,40 @@
 // ===================================================================
 
 const games = [
-    {
-        universeId: '7436755782',
-        placeId: '126884695634066',
-        description: 'Plant seeds, watch them grow, and harvest amazing crops!'
+    { // Yeet Troll Tower
+        universeId: '8712947205',
+        placeId: '131613915463964',
+        description: ''
     },
-    {
-        universeId: '7220976771',
-        placeId: '124303827481398',
-        description: 'An amazing adventure game with stunning visuals and engaging gameplay.'
-    },
-    {
+    { // Survive the 99 nights
         universeId: '9099047604',
         placeId: '99386576172436',
-        description: 'An amazing adventure game with stunning visuals and engaging gameplay.'
+        description: ''
+    },
+    { // Dont wake the 67 up
+        universeId: '8934653557',
+        placeId: '74805461262368',
+        description: ''
+    },
+    { // Dont wake the K-Pop demon up
+        universeId: '8548339583',
+        placeId: '134319041221248',
+        description: ''
+    },
+    { // Dont wake the zoo
+        universeId: '8762440226',
+        placeId: '103474254498352',
+        description: ''
+    },
+    { // Unknown
+        universeId: '9233836512',
+        placeId: '129455795245776',
+        description: ''
+    },
+     { // Unknown 2
+        universeId: '8681395451',
+        placeId: '77353193309833',
+        description: ''
     },
     // Add more games below - just copy the format above
     // {
